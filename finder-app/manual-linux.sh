@@ -12,7 +12,6 @@ BUSYBOX_VERSION=1_33_1
 FINDER_APP_DIR=$(realpath $(dirname $0))
 ARCH=arm64
 CROSS_COMPILE=aarch64-none-linux-gnu-
-ROOTFS="${OUTDIR}/rootfs"
 TOOLCHAIN="/home/nake/coursera/linux-system-programming/toolchain/arm-cross/aarch64-none-linux-gnu/"
 
 if [ $# -lt 1 ]
@@ -23,6 +22,7 @@ else
 	echo "Using passed directory ${OUTDIR} for output"
 fi
 
+ROOTFS="${OUTDIR}/rootfs"
 mkdir -p ${OUTDIR}
 
 cd "$OUTDIR"
@@ -60,10 +60,10 @@ echo "Adding the Image in outdir"
 
 echo "Creating the staging directory for the root filesystem"
 cd "$OUTDIR"
-if [ -d "${OUTDIR}/rootfs" ]
+if [ -d "${ROOTFS}" ]
 then
-	echo "Deleting rootfs directory at ${OUTDIR}/rootfs and starting over"
-    sudo rm  -rf ${OUTDIR}/rootfs
+	echo "Deleting rootfs directory at ${ROOTFS} and starting over"
+    sudo rm  -rf ${ROOTFS}
 fi
 
 # TEST: Create necessary base directories
