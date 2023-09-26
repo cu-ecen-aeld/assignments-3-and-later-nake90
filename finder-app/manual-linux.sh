@@ -13,7 +13,6 @@ FINDER_APP_DIR=$(realpath $(dirname $0))
 ARCH=arm64
 CROSS_COMPILE=aarch64-none-linux-gnu-
 # /home/nake/coursera/linux-system-programming/toolchain/arm-cross/aarch64-none-linux-gnu/
-TOOLCHAIN=${TOOLCHAIN:-"/usr/local/arm-cross-compiler/install/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu"}
 
 if [ $# -lt 1 ]
 then
@@ -97,10 +96,11 @@ ${CROSS_COMPILE}readelf -a bin/busybox | grep "Shared library"
 
 
 # TEST: Add library dependencies to rootfs
-cp -f "${TOOLCHAIN}/libc/lib/ld-linux-aarch64.so.1" "${ROOTFS}/lib/"
-cp -f "${TOOLCHAIN}/libc/lib64/libm.so.6" "${ROOTFS}/lib64/"
-cp -f "${TOOLCHAIN}/libc/lib64/libresolv.so.2" "${ROOTFS}/lib64/"
-cp -f "${TOOLCHAIN}/libc/lib64/libc.so.6" "${ROOTFS}/lib64/"
+SYSROOT=$(${CROSS_COMPILE}gcc -print-sysroot)
+cp -fv "${SYSROOT}/lib/ld-linux-aarch64.so.1" "${ROOTFS}/lib/"
+cp -fv "${SYSROOT}/lib64/libm.so.6" "${ROOTFS}/lib64/"
+cp -fv "${SYSROOT}/lib64/libresolv.so.2" "${ROOTFS}/lib64/"
+cp -fv "${SYSROOT}/lib64/libc.so.6" "${ROOTFS}/lib64/"
 
 # TEST: Make device nodes
 sudo mknod -m 666 dev/null c 1 3
