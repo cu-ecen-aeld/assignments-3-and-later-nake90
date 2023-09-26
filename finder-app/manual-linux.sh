@@ -12,7 +12,8 @@ BUSYBOX_VERSION=1_33_1
 FINDER_APP_DIR=$(realpath $(dirname $0))
 ARCH=arm64
 CROSS_COMPILE=aarch64-none-linux-gnu-
-TOOLCHAIN="/home/nake/coursera/linux-system-programming/toolchain/arm-cross/aarch64-none-linux-gnu/"
+# /home/nake/coursera/linux-system-programming/toolchain/arm-cross/aarch64-none-linux-gnu/
+TOOLCHAIN=${TOOLCHAIN:-"/usr/local/arm-cross-compiler/install/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu"}
 
 if [ $# -lt 1 ]
 then
