@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Author: Alfonso Arbona Gimeno
 #
 # Assignment1.9
