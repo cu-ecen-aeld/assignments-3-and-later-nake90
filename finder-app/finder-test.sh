@@ -12,7 +12,7 @@ cd "$(dirname "$0")"
 NUMFILES=10
 WRITESTR=AELD_IS_FUN
 WRITEDIR=/tmp/aeld-data
-username=$(cat conf/username.txt)
+username=$(cat "${CONF}/username.txt")
 
 if [ $# -lt 3 ]
 then
