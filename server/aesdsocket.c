@@ -359,6 +359,19 @@ int main(int argc, char** argv)
 		}
 	}
 
+	syslog(LOG_DEBUG, "Listening for connections");
+	retval = listen(srvsock, 1);
+	if (retval == -1)
+	{
+		retval = errno;
+		close(srvsock);
+		freeaddrinfo(servinfo);
+		syslog(LOG_ERR, "listen error: %s", strerror(retval));
+	    pthread_mutex_destroy(&mutex_data);
+		return -1;
+	}
+
+
 	syslog(LOG_DEBUG, "Set up signals");
 	
 	sa.sa_flags = SA_SIGINFO;
@@ -394,19 +407,7 @@ int main(int argc, char** argv)
 	    pthread_mutex_destroy(&mutex_data);
 		return -1;
 	}
-
-	syslog(LOG_DEBUG, "Listening for connections");
-	retval = listen(srvsock, 1);
-	if (retval == -1)
-	{
-		retval = errno;
-		close(srvsock);
-		freeaddrinfo(servinfo);
-		syslog(LOG_ERR, "listen error: %s", strerror(retval));
-	    pthread_mutex_destroy(&mutex_data);
-		return -1;
-	}
-
+	
 	// Create the timer thread
 	struct s_thread_node* node = malloc(sizeof(struct s_thread_node));
 	if (!node)
