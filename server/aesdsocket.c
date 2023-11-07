@@ -325,6 +325,7 @@ int main(int argc, char** argv)
 		return -1;
 	}
 	
+	/*
 	int yes = 1;
 	if (setsockopt(srvsock, SOL_SOCKET, SO_REUSEPORT, &yes, sizeof(int)) == -1)
 	{
@@ -333,7 +334,7 @@ int main(int argc, char** argv)
 		pthread_mutex_destroy(&mutex_data);
 		freeaddrinfo(servinfo);
 		return -1;
-	}
+	}*/
 
 	retval = bind(srvsock, servinfo->ai_addr, servinfo->ai_addrlen);
 	if (retval == -1)
@@ -359,7 +360,7 @@ int main(int argc, char** argv)
 		}
 	}
 
-	syslog(LOG_DEBUG, "Listening for connections");
+	//syslog(LOG_DEBUG, "Listening for connections");
 	retval = listen(srvsock, 1);
 	if (retval == -1)
 	{
@@ -372,7 +373,7 @@ int main(int argc, char** argv)
 	}
 
 
-	syslog(LOG_DEBUG, "Set up signals");
+	//syslog(LOG_DEBUG, "Set up signals");
 	
 	sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
@@ -396,7 +397,7 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	syslog(LOG_DEBUG, "Opening the temp file");
+	//syslog(LOG_DEBUG, "Opening the temp file");
 	tmpfile = fopen(TEMPFILE, "w+");
 	if (!tmpfile)
 	{
@@ -452,7 +453,7 @@ int main(int argc, char** argv)
 
 	while (atomic_load(&running))
 	{
-		syslog(LOG_DEBUG, "Waiting for connections");
+		//syslog(LOG_DEBUG, "Waiting for connections");
 		//printf("Waiting for connections\n");
 		clisock = accept(srvsock, (struct sockaddr*) &cliinfo, &cliinfo_size);
 		if (clisock == -1)
