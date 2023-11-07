@@ -102,6 +102,7 @@ void delete_finished_threads(queue_thread_t* queue, bool wait_all_terminate)
 				       node->thread_data.their_ip, node->thread_data.retval);
 			}
 			pthread_mutex_destroy(node->thread_data.mutex_thread);
+			free(node->thread_data.mutex_thread);
 
 			STAILQ_REMOVE(queue, node, s_thread_node, nodes);
 			free(node);
@@ -305,7 +306,6 @@ int main(int argc, char** argv)
 	hints.ai_family = AF_UNSPEC; // AF_INET or AF_INET6 or AF_UNSPEC
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = AI_PASSIVE;
-	sleep(3);
 
 	retval = getaddrinfo(NULL, SERVICE, &hints, &servinfo);
 	if (retval != 0)
@@ -326,7 +326,7 @@ int main(int argc, char** argv)
 	}
 	
 	int yes = 1;
-	if (setsockopt(srvsock, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1)
+	if (setsockopt(srvsock, SOL_SOCKET, SO_REUSEPORT, &yes, sizeof(int)) == -1)
 	{
 	    retval = errno;
 		syslog(LOG_ERR, "setsockopt error: %s", strerror(retval));
