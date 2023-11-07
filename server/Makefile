@@ -1,7 +1,7 @@
 CC := $(CROSS_COMPILE)gcc
 LD := $(CROSS_COMPILE)ld
 ASM := $(CROSS_COMPILE)asm
-CFLAGS ?= -Wall -g
+CFLAGS ?= -Wall -g -pthread
 
 .PHONY: clean all default
 all: aesdsocket
