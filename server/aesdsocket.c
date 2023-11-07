@@ -325,7 +325,6 @@ int main(int argc, char** argv)
 		return -1;
 	}
 	
-	/*
 	int yes = 1;
 	if (setsockopt(srvsock, SOL_SOCKET, SO_REUSEPORT, &yes, sizeof(int)) == -1)
 	{
@@ -334,7 +333,7 @@ int main(int argc, char** argv)
 		pthread_mutex_destroy(&mutex_data);
 		freeaddrinfo(servinfo);
 		return -1;
-	}*/
+	}
 
 	retval = bind(srvsock, servinfo->ai_addr, servinfo->ai_addrlen);
 	if (retval == -1)
